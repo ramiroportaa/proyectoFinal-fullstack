@@ -4,6 +4,7 @@ import cartsRouter from "./carts.router.js";
 import adminRouter from "./admin.router.js";
 import ordersRouter from "./orders.router.js";
 import messagesRouter from "./messages.router.js";
+import categoriesRouter from "./categories.router.js";
 import loginRouter from "./login.router.js";
 import logoutRouter from "./logout.router.js";
 import configRouter from "./config.router.js";
@@ -22,6 +23,7 @@ router.use("/api/carrito", cartsRouter);
 router.use("/api/user", usersRouter);
 router.use("/api/order", ordersRouter);
 router.use("/api/chat", messagesRouter);
+router.use("/api/categories", categoriesRouter);
 
 //Revisar
 //Cambiar a /api/... y en el front cambiar tambien la direccion.

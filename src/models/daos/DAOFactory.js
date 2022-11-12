@@ -4,6 +4,7 @@ import ProductsDAOmongo from "./productsModel.DAO.mongo.js";
 import ProductsDAOfirebase from "./productsModel.DAO.firebase.js";
 import UsersDAOmongo from "./usersModel.DAO.mongo.js";
 import MessagesDAOmongo from "./messagesModel.DAO.mongo.js";
+import CategoriesDAOmongo from "./categoriesModel.DAO.mongo.js";
 import logger from "../../utils/logger.js";
 
 class DAOFactory {
@@ -15,6 +16,7 @@ class DAOFactory {
           case "cart": return CartsDAOmongo.getInstance();
           case "user": return UsersDAOmongo.getInstance();
           case "message": return MessagesDAOmongo.getInstance();
+          case "category": return CategoriesDAOmongo.getInstance();
           default:
             throw {
               message: `Error in DAOFactory, ${name} DAO not exist`,
@@ -27,6 +29,7 @@ class DAOFactory {
           case "cart": return CartsDAOfirebase.getInstance();
           case "user": return UsersDAOmongo.getInstance();
           case "message": return MessagesDAOmongo.getInstance();
+          case "category": return CategoriesDAOmongo.getInstance();
           default:
             throw {
               message: `Error in DAOFactory, ${name} DAO not exist`,

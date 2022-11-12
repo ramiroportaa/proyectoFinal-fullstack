@@ -2,6 +2,7 @@
 //Ademas contiene las instrucciones de ejecutar la funcion de compra cada vez que clickeamos en el boton de agregar al carrito.
 function escribirProductosHTML (arrayProductos, columnas=3) {
     const productosHTML = document.getElementById("productos");
+    productosHTML.innerHTML = "";
     if (!arrayProductos.length){
         productosHTML.innerText = "NO HAY PRODUCTOS PARA MOSTRAR"
         return
