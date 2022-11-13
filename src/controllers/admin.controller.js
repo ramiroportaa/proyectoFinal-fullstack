@@ -37,12 +37,21 @@ const getChat = (req, res)=>{
     } catch (error) {
         logger.warn(error);
     }
+}
 
+const getCategories = (req, res)=>{
+    try {
+        const user = req.user;
+        res.render("admin-categorias.ejs", user);
+    } catch (error) {
+        logger.warn(error);
+    }
 }
 
 export default {
     getPanel,
     getProducts,
     getForm,
-    getChat
+    getChat,
+    getCategories
 }
