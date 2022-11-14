@@ -10,7 +10,7 @@ function renderModalesOrders (orders){
     orders.forEach((order) => {
         let contenedor = document.createElement("div");
         contenedor.className = "modal fade";
-        contenedor.id = `#orderView-${order._id}`;
+        contenedor.id = `orderView-${order._id}`;
         contenedor.tabIndex = "-1";
         contenedor.role = "dialog";
         contenedor.ariaHidden = "true";
@@ -59,7 +59,7 @@ const renderOrders = async()=>{
                                 <th class="pl-0 border-0" scope="row">
                                 <div class="media align-items-center">
                                     <div class="ms-3"><strong class="h6"><a class="reset-anchor" href="#orderView-${order._id}" data-bs-toggle="modal">Orden #${order._id}</a></strong></div>
-                                    <a class="btn btn-sm btn-outline-dark ms-3" href="#orderView-${order._id}" data-bs-toggle="modal">VER</a>
+                                    <button class="btn btn-sm btn-outline-dark ms-3" data-bs-toggle="modal" data-bs-target="#orderView-${order._id}">VER</button>
                                 </div>
                                 </th>
                                 <td class="align-middle border-0">
