@@ -1,9 +1,14 @@
 import { Router } from "express";
-import tiendaController from "../controllers/orders.controller.js";
+import ordersController from "../controllers/orders.controller.js";
+import {auth} from "../middlewares/index.js";
 
 const router = Router();
 
-router.post("/", tiendaController.newOrder);
+router.use(auth);
+
+router.get("/:email", ordersController.getOrdersByEmail);
+router.post("/", ordersController.newOrder);
+
 
 
 export default router;

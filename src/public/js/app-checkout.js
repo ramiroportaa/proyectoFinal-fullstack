@@ -154,13 +154,10 @@ async function pushDatos(){
 }
 //Funcion de POST usando JQUERY.
 function postOrden () {
-    console.log("-------------");
-    console.log(infoPost[0]);
-    console.log("-------------");
     $.post("/api/order", infoPost[0] , (response, state)=>{
     if (state === "success"){
         Swal.fire({
-            title: `<strong>Orden #${response.idCart} enviada</strong>`,
+            title: `<strong>Orden #${response.data._id} enviada</strong>`,
             icon: 'success',
             html: response.message,
             showCloseButton: true,

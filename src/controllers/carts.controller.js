@@ -13,7 +13,7 @@ const getProducts = async (req, res)=>{
 
 const createCart = async (req, res)=>{
     try {
-        const data = await cartsService.createCart(req.user.id);
+        const data = await cartsService.createCart(req.user.id, req.user.email);
         res.status(201).json(new WSresponse(data, "cart created"));
     } catch (error) {
         return res.status(error.status).json(new WSresponse(null, error.message, true));
@@ -36,7 +36,8 @@ const deleteById = async (req, res)=>{
     try {
         const idCart = req.params.id;
         const idUser = req.user.id;
-        await cartsService.deleteById(idCart, idUser);
+        const email = req.user.email;
+        await cartsService.deleteById(idCart, idUser, email);
         res.status(200).json(new WSresponse(null, "success"));
     } catch (error) {
         return res.status(error.status).json(new WSresponse(null, error.message, true));
@@ -54,16 +55,10 @@ const deleteProductById = async (req, res)=>{
     }
 };
 
-const getCurrentCartId = async (req, res)=>{
-    const idCart = req.user.currentCart;
-    res.status(200).json(new WSresponse(idCart, "success"));
-};
-
 export default {
     getProducts,
     createCart,
     addProduct,
     deleteById,
-    deleteProductById,
-    getCurrentCartId
+    deleteProductById
 }

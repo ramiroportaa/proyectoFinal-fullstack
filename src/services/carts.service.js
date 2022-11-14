@@ -1,4 +1,4 @@
-import cartDTO from "../models/dtos/cart.DTO.js";
+import CartDTO from "../models/dtos/cart.DTO.js";
 import config from "../config/config.js";
 import DAOFactory from "../models/daos/DAOFactory.js";
 
@@ -15,23 +15,26 @@ const getProducts = async (idCart)=>{
         let isUpdateCart = [];
 
         const productsArray = await Promise.all(cartData.productos.map(async prodInCart => {
-            const productData = await productsDAO.getById(prodInCart.idProd);
+            const productDB = await productsDAO.getById(prodInCart.idProd);
 
             //Revalidación de stock (ya que el mismo puede haber cambiado y en el cart quedo una cantidad mayor).
-            if (prodInCart.quantity > productData.stock){
-                prodInCart.quantity = productData.stock;
+            if (prodInCart.quantity > productDB.stock){
+                prodInCart.quantity = productDB.stock;
                 isUpdateCart.push(prodInCart);
             }
 
-            productData.quantity = prodInCart.quantity;
+            productDB.quantity = prodInCart.quantity;
 
-            return productData;
+            return productDB;
         }))
 
-        if (isUpdateCart){
+        if (isUpdateCart.length){
             const newProductsCartData = cartData.productos.map(prod =>{
                 isUpdateCart.forEach(prodToUpdate => {
-                    if (prod.idProd == prodToUpdate.idProd) return prodToUpdate;
+                    if (prod.idProd == prodToUpdate.idProd){
+                        if (prodToUpdate.quantity == 0) return;
+                        return prodToUpdate;
+                    } 
                 })
                 return prod;
             })
@@ -39,7 +42,7 @@ const getProducts = async (idCart)=>{
             cartsDAO.updateOne(idCart, {productos: newProductsCartData});
         }
 
-        const cart = new cartDTO(cartData, productsArray);
+        const cart = new CartDTO(cartData, productsArray);
 
         return cart.productos;
         
@@ -48,10 +51,10 @@ const getProducts = async (idCart)=>{
     }
 };
 
-const createCart = async (userId)=>{
+const createCart = async (userId, email)=>{
     try {
         //Creamos un carrito con 0 productos.
-        const data = await cartsDAO.add({productos: []});
+        const data = await cartsDAO.add({productos: [], email});
         //Editamos el valor currentCart del user que lo creo.
         await usersDAO.updateOne(userId, {currentCart: data._id});
         //Devolvemos al cliente el id de carrito creado.
@@ -97,11 +100,12 @@ const addProduct = async (idCart, idProd, quantity)=>{
     }
 };
 
-const deleteById = async (idCart, idUser)=>{
+const deleteById = async (idCart, idUser, email) =>{
     try {
         await cartsDAO.deleteById(idCart);
-        //Editamos el valor currentCart del user que lo borro.
-        await usersDAO.updateOne(idUser, {currentCart: ""});
+        //Creamos un nuevo carrito ya que es necesario para el correcto flujo de la aplicación
+        //(Se prefiere crear el nuevo carrito, ni bien se elimina el anterior, desde el back en lugar del front).
+        await createCart(idUser, email);
     } catch (error) {
         throw error;
     }
@@ -117,8 +121,6 @@ const deleteProductById = async (idCart, idProd)=>{
         throw error;
     }
 };
-
-
 
 export default {
     getProducts,

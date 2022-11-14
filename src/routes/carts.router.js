@@ -6,7 +6,6 @@ const router = Router();
 
 router.use(auth);
 
-router.get("/current", cartsController.getCurrentCartId);
 router.get("/:id/productos", ownerCartAuth, cartsController.getProducts);
 
 router.post("/", cartsController.createCart);

@@ -68,10 +68,6 @@ const deleteProductAPI = async (id) => {
 const getProductsCartFromAPI = async () => {
   const id = currentUser.currentCart;
   let res = await fetch(`/api/carrito/${id}/productos`);
-  if (res.status == 404 || res.status == 401) {
-    await createCartAPI();
-    return false;
-  }
   res = await res.json();
   if (res.error) {
     alertaInfo(res.message);
@@ -79,15 +75,6 @@ const getProductsCartFromAPI = async () => {
   }
   cart = res.data;
   return true;
-};
-//Crear un carrito en la API y obtener su ID.
-const createCartAPI = async () => {
-  let res = await fetch("/api/carrito", {
-    method: "POST",
-  });
-  res = await res.json();
-  if (res.error) return alertaInfo(res.message);
-  return res.data;
 };
 //Eliminar un carrito completo de la API.
 const deleteCartAPI = async () => {
@@ -151,7 +138,8 @@ const renderPerfilUsuario = (user)=>{
 <div class="d-block m-auto me-0"></div>
 <a class="btn btn-success text-white me-3" href="/chat.html" role="button">CHAT!</a>
   ${(user.role == "invitado") ? `<a class="btn btn-primary text-white" href="/login.html" role="button">Login</a>` 
-  : `<a class="btn btn-warning text-white" href="/logout.html" role="button">Desloguear</a>`
+  : `<a class="btn btn-primary text-white me-3" href="/orders.html" role="button">Mis Ordenes</a>
+  <a class="btn btn-warning text-white" href="/logout.html" role="button">Desloguear</a>`
   }
 </div>`
 
