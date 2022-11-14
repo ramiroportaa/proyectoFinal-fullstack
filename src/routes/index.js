@@ -24,9 +24,6 @@ router.use("/api/user", usersRouter);
 router.use("/api/order", ordersRouter);
 router.use("/api/chat", messagesRouter);
 router.use("/api/categories", categoriesRouter);
-
-//Revisar
-//Cambiar a /api/... y en el front cambiar tambien la direccion.
 router.use("/login", loginRouter);
 router.use("/logout", logoutRouter);
 

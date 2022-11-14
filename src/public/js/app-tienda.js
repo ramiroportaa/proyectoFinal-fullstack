@@ -56,7 +56,6 @@ const initial = async ()=>{
     escribirProductosHTML(productos);
     escribirModalesHTML(productos);
     const categoriesArray = await getCategories();
-    console.log(categoriesArray);
     renderCategories(categoriesArray);
 }
 initial();

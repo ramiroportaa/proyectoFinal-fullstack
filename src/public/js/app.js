@@ -153,7 +153,7 @@ function verAlerta() {
 }
 let identificadorDeTemporizador;
 function temporizadorAlerta() {
-  identificadorDeTemporizador = setTimeout(verAlerta, 2000);
+  identificadorDeTemporizador = setTimeout(verAlerta, 3000);
 }
 function alertaInfo(contenidoHTML) {
   dialogoInfo.innerHTML = contenidoHTML;

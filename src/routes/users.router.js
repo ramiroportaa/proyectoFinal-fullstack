@@ -5,14 +5,9 @@ import {multerUpload} from "../utils/multerUpload.js";
 
 const router = Router();
 
-//Revisar
-//Dejo o elimino este get?
-//router.get("/:id", usersController.getById);
-
 router.get("/current", usersController.getCurrentUser);
-
+router.get("/:id", usersController.getById);
 router.post("/", multerUpload.single("avatar"), multerFileValidator, usersController.registerUser);
-
 router.put("/:id", auth, usersController.updateById);
 
 export default router;

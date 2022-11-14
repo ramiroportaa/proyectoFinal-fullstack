@@ -11,9 +11,6 @@ router.get("/", adminController.getPanel);
 router.get("/productos", adminController.getProducts);
 router.get("/productos/new", adminController.getForm);
 router.get("/categorias", adminController.getCategories);
-
-//Revisar
-//Esta ruta seria para renderizar desde el back un chat donde solo acceden los admin pudiendo responder o enviar mensajes a los user.
 router.get("/chat", adminController.getChat);
 
 

@@ -14,7 +14,7 @@ const newOrder = async (req, res) => {
     const idCart = req.user.currentCart;
     const orderProducts = await cartsService.getProducts(idCart);
 
-    if (!orderProducts.length) return res.status(400).json(new WSresponse(null, 'No se pueden enviar ordenes vacías!', true));
+    if (!orderProducts.length) return res.status(400).json(new WSresponse(null, 'No se pueden enviar ordenes vacías! Agregue productos al carrito.', true));
 
     //Creamos la orden.
     const order = await ordersService.createOrder(orderProducts, req.user.email);

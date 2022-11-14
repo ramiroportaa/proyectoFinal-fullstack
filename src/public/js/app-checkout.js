@@ -152,14 +152,34 @@ async function pushDatos(){
         envio_provincia: iProvinciaEnvio.value
     })
 }
-//Funcion de POST usando JQUERY.
-function postOrden () {
-    $.post("/api/order", infoPost[0] , (response, state)=>{
-    if (state === "success"){
+
+async function postOrden () {
+    try {
+        alertaInfo("Enviando Orden... Espere!!!");
+
+        let res = await fetch("/api/order", {
+            method: "POST",
+            body: JSON.stringify(infoPost[0]),
+            headers: {"Content-Type": "application/json"}
+        })
+    
+        res = await res.json();
+    
+        if (res.error) return Swal.fire({
+            title: `<strong>Error al generar orden :(</strong>`,
+            icon: 'error',
+            html: res.message,
+            showCloseButton: true,
+            showCancelButton: false,
+            showConfirmButton: false,
+            focusConfirm: false,
+            timer: 3000
+        })
+    
         Swal.fire({
-            title: `<strong>Orden #${response.data._id} enviada</strong>`,
+            title: `<strong>Orden #${res.data._id} enviada</strong>`,
             icon: 'success',
-            html: response.message,
+            html: res.message,
             showCloseButton: true,
             showCancelButton: false,
             showConfirmButton: false,
@@ -168,9 +188,20 @@ function postOrden () {
           }).then(()=>{
               location.href = "/tienda.html";
           });
+
+    } catch (error) {
+        Swal.fire({
+            title: `<strong>Error al generar orden :(</strong>`,
+            icon: 'error',
+            html: error.message,
+            showCloseButton: true,
+            showCancelButton: false,
+            showConfirmButton: false,
+            focusConfirm: false,
+            timer: 3000
+        })
     }
-}).catch(err => alertaInfo(err.responseJSON.message))
-}
+} 
 
 getUserDataFromAPI().then(res =>{
     renderPerfilUsuario(currentUser);
