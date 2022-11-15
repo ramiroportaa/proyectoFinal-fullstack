@@ -1,5 +1,6 @@
 import { MongoContainer } from "./containers/container.DAO.mongo.js";
 import productModel from "../product.model.js";
+import logger from "../../utils/logger.js";
 
 let instance = null;
 
@@ -16,9 +17,9 @@ class ProductDAO extends MongoContainer {
         return instance;
     }
     
-    async getByCategory(category){
+    async getByCategory(category, sort = {}){
         try {
-            const data = await this.model.find({categoria: category});
+            const data = await this.model.find({categoria: category}).sort(sort);
             return data;
         } catch (error) {
             logger.warn(`error in getting products by category (productsModel.DAO): ${error}`);

@@ -3,7 +3,8 @@ import WSresponse from "../libs/WSresponse.js";
 
 const getAll = async (req, res)=>{
     try {
-        const data = await productsService.getAll();
+        const sort = (req.query.sort) ? {precio: Number(req.query.sort)} : {};
+        const data = await productsService.getAll(sort);
         res.status(200).json(new WSresponse(data, "success"));
     } catch (error) {
         return res.status(error.status).json(new WSresponse(null, error.message, true));
@@ -13,10 +14,11 @@ const getAll = async (req, res)=>{
 const getByCategory = async (req, res)=>{
     try {
         const category = req.params.category;
-        const data = await productsService.getByCategory(category);
+        const sort = (req.query.sort) ? {precio: Number(req.query.sort)} : {};
+        const data = await productsService.getByCategory(category, sort);
         res.status(200).json(new WSresponse(data, "success"));
     } catch (error) {
-        return res.status(error.status).json(new WSresponse(null, error.message, true));
+        return res.status(error.status || 500).json(new WSresponse(null, error.message, true));
     }
 };
 

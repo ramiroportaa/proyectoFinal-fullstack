@@ -3,18 +3,18 @@ import DAOFactory from "../models/daos/DAOFactory.js";
 
 const productsDAO = DAOFactory.createDao("product", config.DATABASE);
 
-const getAll = async () => {
+const getAll = async (sort = {}) => {
     try {
-        const products = await productsDAO.getAll();
+        const products = await productsDAO.getAll(sort);
         return products;
     } catch (error) {
         throw error;
     }
 };
 
-const getByCategory = async (category) => {
+const getByCategory = async (category, sort = {}) => {
     try {
-        const products = await productsDAO.getByCategory(category);
+        const products = await productsDAO.getByCategory(category, sort);
         return products;
     } catch (error) {
         throw error;

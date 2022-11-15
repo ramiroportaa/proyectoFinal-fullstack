@@ -7,9 +7,9 @@ export class MongoContainer extends DAO {
         this.collection = collectionName;
         this.model = model;
     }
-    async getAll(){
+    async getAll(sort = {}){
         try {
-            const data = await this.model.find();
+            const data = await this.model.find().sort(sort);
             return data;
         } catch (error) {
             logger.warn(`Mongo model container: error in getting all ${this.collection}s: ${error}`);

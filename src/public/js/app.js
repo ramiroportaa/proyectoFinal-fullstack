@@ -17,10 +17,12 @@ const getUserDataFromAPI = async () => {
 
 //Fetchs a /api/productos
 //Obtener todos los productos y pushearlos al array de productos.
-const getProductsFromAPI = async () => {
-  let res = await fetch("/api/productos");
+const getProductsFromAPI = async (sortOp = "default") => {
+  const sort = (sortOp != "default") ? `?sort=${sortOp}` : "";
+  let res = await fetch("/api/productos" + sort);
   res = await res.json();
   productos = res.data;
+  return productos;
 };
 //Obtener un solo producto por su ID.
 const getProductByIdFromAPI = async (id) => {

@@ -45,6 +45,7 @@ function escribirProductosHTML (arrayProductos, columnas=3) {
 //Ademas contiene las instrucciones de ejecutar la funcion de compra cada vez que clickeamos en el boton de agregar al carrito dentro del modal.
 function escribirModalesHTML (arrayProductos){
     const modales = document.getElementById("modales");
+    modales.innerHTML = "";
     if (!arrayProductos.length) return;
     arrayProductos.forEach((producto) => {
         let contenedor = document.createElement("div");
