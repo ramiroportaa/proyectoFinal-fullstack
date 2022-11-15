@@ -11,34 +11,37 @@ const getProducts = async (idCart)=>{
         const cartData = await cartsDAO.getById(idCart);
         if (!cartData) throw {message: `no cart with ID: ${idCart}`, status: 404};
 
-        //Array para almacenar los productos del carrito a los que se debe actualizar el quantity por ser mayor al stock actual.
-        let isUpdateCart = [];
+        //Bandera que indica si se debe actualizar el carrito por haber algun producto con quantity mayor al stock actual.
+        let isUpdateCart = false;
 
-        const productsArray = await Promise.all(cartData.productos.map(async prodInCart => {
+        //Array de productos para luego renderizarlos con sus datos completos (En la DB se guarda solo el idProd y el quantity).
+        const productsArray = [];
+
+        //Al mapear el array de cartData.productos, estamos modificando el mismo directamente (a diferencia de hacer un forEach).
+        await Promise.all(cartData.productos.map(async prodInCart => {
             const productDB = await productsDAO.getById(prodInCart.idProd);
 
             //Revalidación de stock (ya que el mismo puede haber cambiado y en el cart quedo una cantidad mayor).
             if (prodInCart.quantity > productDB.stock){
                 prodInCart.quantity = productDB.stock;
-                isUpdateCart.push(prodInCart);
+                isUpdateCart = true;
             }
 
             productDB.quantity = prodInCart.quantity;
 
-            return productDB;
+            productsArray.push(productDB);
+            return prodInCart;
         }))
 
-        if (isUpdateCart.length){
-            const newProductsCartData = cartData.productos.map(prod =>{
-                isUpdateCart.forEach(prodToUpdate => {
-                    if (prod.idProd == prodToUpdate.idProd){
-                        if (prodToUpdate.quantity == 0) return;
-                        return prodToUpdate;
-                    } 
-                })
-                return prod;
+        if (isUpdateCart){
+            //Creamos nuevo array de productos para el carrito, omitiendo aquellos que antes estaban pero ahora no tienen stock.
+            const newProductsCartData = [];
+            
+            cartData.productos.forEach(prod =>{
+                if (prod.quantity) newProductsCartData.push(prod);
             })
 
+            //Actualizamos en DB.
             cartsDAO.updateOne(idCart, {productos: newProductsCartData});
         }
 

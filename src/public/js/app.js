@@ -136,6 +136,7 @@ const renderPerfilUsuario = (user)=>{
   <h5> ${user.firstName} ${user.lastName}</h5>
   <p> ${user.email} </p>
   <p>ROL: ${user.role} </p>
+  ${(user.role == "admin") ? '<a class="nav-link active" href="/admin">IR AL PANEL DE ADMIN</a>' : ''}
 </div>
 <div class="d-block m-auto me-0"></div>
 <a class="btn btn-success text-white me-3" href="/chat.html" role="button">CHAT!</a>

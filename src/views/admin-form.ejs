@@ -54,6 +54,9 @@
                     <input type="number" required name="precio" step=".01" class="form-control">
                     <label for="stock" class="form-label">Stock</label>
                     <input type="number" required name="stock" class="form-control">
+                    <label for="categoria" class="form-label">Categoría</label>
+                    <select id="categoria" name="categoria" class="form-control">
+                    </select>
                     <label for="foto" class="form-label">Url de foto</label>
                     <input type="text" required name="foto" class="form-control" placeholder="https://imagen.com/img.jpg">
                     <button type="submit" class="btn btn-success mt-3">CARGAR</button>
@@ -77,6 +80,8 @@
     <script src="/js/app.js"></script>
     <script>
         const form = document.querySelector("form");
+        const categoryOptions = document.getElementById("categoria");
+
         form.addEventListener("submit", async (e)=>{
             e.preventDefault();
             const data = new FormData(form);
@@ -85,6 +90,28 @@
             await addProductAPI(obj);
             form.reset();
         });
+
+        const getCategories = async()=>{
+            const categoriesArray = [];
+            let res = await fetch("/api/categories");
+            res = await res.json();
+            res.data.forEach(data =>{
+                categoriesArray.push(data._id);
+            });
+            return categoriesArray;
+        }
+
+        const initial = async ()=>{
+            const categoriesArray = await getCategories();
+            categoriesArray.forEach(category =>{
+                const option = document.createElement("option");
+                option.value = category;
+                option.textContent = category;
+
+                categoryOptions.appendChild(option);
+            })
+        }
+        initial();
     </script>
 </body>
 </html>
