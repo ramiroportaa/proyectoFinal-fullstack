@@ -5,7 +5,7 @@
   "type": "module",
   "main": "src/server.js",
   "scripts": {
-    "start": "node .",
+    "start": "node src/server.js",
     "test": "mocha tests/index.test.js"
   },
   "keywords": [],
