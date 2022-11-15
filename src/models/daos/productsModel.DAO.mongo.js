@@ -26,6 +26,15 @@ class ProductDAO extends MongoContainer {
             throw {message:'error in getting products', status: 500};
         }
     }
+
+    async updateStockById(idProd, quantitySold){
+        try {
+            await this.model.updateOne({_id: idProd}, {$inc: {stock: -quantitySold}});
+        } catch (error) {
+            logger.warn(`error in updating Stock by Id (productsModel.DAO): ${error}`);
+            throw {message: `error in updating Stock Product`, status: 500};
+        }
+    }
 }
 
 export default ProductDAO;

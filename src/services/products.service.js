@@ -63,11 +63,20 @@ const deleteById = async (idProd)=>{
     }
 };
 
+const updateStockById = async (idProd, quantitySold)=>{
+    try {
+        await productsDAO.updateStockById(idProd, quantitySold);
+    } catch (error) {
+        throw error;
+    }
+};
+
 export default {
     getAll,
     getByCategory,
     getById,
     add,
     updateById,
-    deleteById
+    deleteById,
+    updateStockById
 }

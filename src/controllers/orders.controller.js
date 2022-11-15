@@ -1,6 +1,7 @@
 import __dirname from "../dirname.js";
 import ordersService from "../services/orders.service.js";
 import cartsService from "../services/carts.service.js";
+import productsService from "../services/products.service.js";
 import WSresponse from "../libs/WSresponse.js";
 import mailer from "../utils/mailer.js";
 import twilioClient from "../utils/twilioClient.js";
@@ -22,6 +23,10 @@ const newOrder = async (req, res) => {
     //Si la orden se crea correctamente (no lanza ningún error), borramos carrito.
     await cartsService.deleteById(idCart, req.user.id, req.user.email);
 
+    //Luego actualizamos el stock de los productos que se vendieron.
+    orderProducts.forEach(async (prod) => {
+      await productsService.updateStockById(prod._id, prod.quantity);
+    })
 
     //Envío de mail con los datos del nuevo pedido.
     const mailOptions = {
