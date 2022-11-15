@@ -8,3 +8,8 @@
 5) No olvidar crear el archivo ".env" con los datos expuestos en ".env.example".
 6) Los usuarios creados, por defecto son de rol "user". Por lo que, para crear un "admin" y testear las rutas a las que solo estos tienen acceso, se debe crear un usuario y luego modificar su role en la base de datos (desde mongo).
 7) Opté por dejar en el proyecto los archivos correspondientes a la opción de base de datos de "firebase" para hacer su correcta y completa implementación a futuro (por el momento no funciona correctamente).
+8) Se realizo el deploy en ["Railway"](https://proyectofinal-fullstack-production.up.railway.app/): https://proyectofinal-fullstack-production.up.railway.app/
+
+Para probar las funciones de admin desde ese [deploy en Railway](https://proyectofinal-fullstack-production.up.railway.app/), puedes usar el siguiente usuario:
+email: rami@mail.com
+password: rami123
