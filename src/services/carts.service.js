@@ -17,9 +17,16 @@ const getProducts = async (idCart)=>{
         //Array de productos para luego renderizarlos con sus datos completos (En la DB se guarda solo el idProd y el quantity).
         const productsArray = [];
 
-        //Al mapear el array de cartData.productos, estamos modificando el mismo directamente (a diferencia de hacer un forEach).
+        //Al mapear el array de cartData.productos, este devuelve un nuevo arreglo con el resultado del mapeo, y a su vez, los elementos del mismo array original (que se mapea) que son modificados, guardan estas modificaciones.
         await Promise.all(cartData.productos.map(async prodInCart => {
             const productDB = await productsDAO.getById(prodInCart.idProd);
+
+            //Si el producto no existe (fue eliminado de la base de datos), colocamos quantity en 0 y al actualizar el carrito se elimina del mismo.
+            if (!productDB){
+                prodInCart.quantity = 0;
+                isUpdateCart = true;
+                return;
+            }
 
             //Revalidación de stock (ya que el mismo puede haber cambiado y en el cart quedo una cantidad mayor).
             if (prodInCart.quantity > productDB.stock){
@@ -30,6 +37,7 @@ const getProducts = async (idCart)=>{
             productDB.quantity = prodInCart.quantity;
 
             productsArray.push(productDB);
+
             return prodInCart;
         }))
 

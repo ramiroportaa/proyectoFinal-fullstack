@@ -11,7 +11,7 @@ const renderCategories = (categoriesArray)=>{
     categoriesArray.forEach(category => {
         let contenedor = document.createElement("div");
         contenedor.id = category;
-        contenedor.className = "py-2 px-4 bg-dark text-white mb-3 categorias";
+        contenedor.className = "py-2 px-4 bg-dark text-white mb-1 categorias";
         contenedor.innerHTML = `<strong class="small text-uppercase font-weight-bold">${category}</strong>`;
 
         contenedor.addEventListener("click", async (e)=>{
@@ -30,7 +30,7 @@ const renderCategories = (categoriesArray)=>{
     });
 
     let contenedor = document.createElement("a");
-    contenedor.innerText = "Ver todos los productos";
+    contenedor.innerText = "→ Ver todos los productos ←";
     contenedor.className = "reset-anchor text-uppercase categorias";
     contenedor.addEventListener("click", async ()=>{
         await getProductsFromAPI(currentSort);

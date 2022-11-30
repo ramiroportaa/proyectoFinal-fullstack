@@ -97,7 +97,7 @@ describe("Test de productos", ()=>{
             .set("Cookie", [...header["set-cookie"]])
             .send({
                 nombre: "Chaqueta",
-                foto: "https://cdn1.iconfinder.com/data/icons/clothes-outfit-line-shop-aholic/512/Jacket-256.png"
+                foto: "https://cdn1.iconfinder.com/data/icons/clothes-outfit-linE-COMMERCE-aholic/512/Jacket-256.png"
             });
             
             expect(res.status).to.eql(201);

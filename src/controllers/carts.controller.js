@@ -7,7 +7,7 @@ const getProducts = async (req, res)=>{
         const data = await cartsService.getProducts(idCart);
         res.status(200).json(new WSresponse(data, "success"));
     } catch (error) {
-        return res.status(error.status).json(new WSresponse(null, error.message, true));
+        return res.status(error.status || 500).json(new WSresponse(null, error.message, true));
     } 
 };
 
