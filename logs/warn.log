@@ -1,2 +1,2 @@
 
-[WARN] | 14-11-2022 22:27 | pid: 11196: error in getting products by category (productsModel.DAO): TypeError: Invalid sort value: { precio: "-1" }
+
