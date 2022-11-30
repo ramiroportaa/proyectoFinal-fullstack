@@ -9,10 +9,12 @@
     <title>Proyecto Final | BackEnd | CoderHouse 2022</title>
 </head>
 <body>
-    <div class="container mt-3">
-        <h1 class="alert alert-primary">
-            Saliendo...  
-        </h1>
+    <div class="container d-flex align-items-center justify-content-center vh-100">
+        <div class="d-flex align-items-center justify-content-center">
+            <h1 class="alert alert-primary">
+                Saliendo...  
+            </h1>
+        </div>
     </div>
 
     <script>
@@ -21,6 +23,7 @@
         }).then(res=>{
             const h1 = document.querySelector("h1");
             if (res.error){
+                h1.className = "alert alert-danger"
                 h1.innerHTML = `${res.message}`;
             } else {
                 h1.innerHTML = `Hasta luego, ${res.data}`;
