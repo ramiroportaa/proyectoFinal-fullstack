@@ -25,6 +25,7 @@ const getCurrentUser = async (req, res)=>{
 const registerUser = async (req, res)=>{
     try {
         const newUser = req.body;
+        newUser.role = "user";
     
         const data = await usersService.registerUser(newUser);
 

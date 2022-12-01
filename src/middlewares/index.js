@@ -13,6 +13,12 @@ const ownerCartAuth = (req, res, next)=>{
     return res.status(401).json(new WSresponse(null, 'No eres el dueño del carrito', true, -1));
 };
 
+//El id del usuario a modificar coincide con el del user en sesion o es un admin?
+const authUpdateUser = (req, res, next)=>{
+    if (req.user.id == req.params.id || req.user.role === "admin") return next();
+    return res.status(401).json(new WSresponse(null, 'No tienes permisos para editar los datos de otro usuario', true, -1));
+};
+
 //Mid de autenticacion y AUTORIZACION...
 const adminAuth = (req, res, next)=>{
     if (req.isAuthenticated()){
@@ -48,6 +54,7 @@ const notFound = (req, res)=>{
 export {
     auth,
     ownerCartAuth,
+    authUpdateUser,
     adminAuth,
     multerFileValidator,
     generalError,

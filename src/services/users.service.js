@@ -77,7 +77,7 @@ const registerUser = async (user)=>{
             <p>Avatar adjunto</p>
             `,
             attachments: [
-                {path: __dirname + "/public" + userDB.avatar}
+                {path: userDB.avatar.startsWith("/uploads") ? __dirname + "/public" + userDB.avatar : userDB.avatar}
             ]
         }
 
